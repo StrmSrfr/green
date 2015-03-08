@@ -1,0 +1,44 @@
+<project name="green" default="repl">
+  <property name="classes" value="classes"/>
+  <property name="dist" value="dist"/>
+  <property name="lib" value="lib"/>
+  <property name="src" value="src"/>
+  <path id="classpath">
+    <pathelement path="${classes}"/>
+    <fileset dir="${lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+  <target name="repl" depends="compile">
+    <java classname="me.cytochro.green.Green"
+          classpathref="classpath"
+          fork="true"/>
+  </target>
+  <target name="jar" depends="clean,compile,distDir">
+    <jar destfile="${dist}/green.jar"
+         basedir="${classes}"/>
+  </target>
+  <target name="clean">
+    <delete includeEmptyDirs="true" verbose="true">
+      <fileset dir="${classes}"/>
+      <fileset dir="${dist}"/>
+    </delete>
+  </target>
+  <target name="compile" depends="classesDir">
+    <depend srcDir="${src}" destDir="${clasess}"/>
+    <javac srcDir="${src}"
+           destDir="${classes}"
+           classpathref="classpath"
+           debug="true"
+           deprecation="true"
+           includeantruntime="false"
+           source="1.8"
+           target="1.8"/>
+  </target>
+  <target name="classesDir">
+    <mkdir dir="${classes}"/>
+  </target>
+  <target name="distDir">
+    <mkdir dir="${dist}"/>
+  </target>
+</project>
