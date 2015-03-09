@@ -1,4 +1,4 @@
-<project name="green" default="repl">
+<project name="green" default="jar">
   <property name="classes" value="classes"/>
   <property name="dist" value="dist"/>
   <property name="lib" value="lib"/>
@@ -9,17 +9,20 @@
       <include name="**/*.jar"/>
     </fileset>
   </path>
-  <target name="repl" depends="compile">
-    <java classname="me.cytochro.green.Green"
-          classpathref="classpath"
-          fork="true"/>
-  </target>
   <target name="jar" depends="clean,compile,distDir">
     <jar destfile="${dist}/green.jar"
-         basedir="${classes}"/>
+         basedir="${classes}">
+      <manifest>
+        <attribute name="Main-Class" value="me/cytochro/green/Green"/>
+        <attribute name="Class-Path" value="../lib/zson-0.0.0.2.jar"/>
+      </manifest>
+    </jar>
   </target>
   <target name="clean">
-    <delete includeEmptyDirs="true" verbose="true">
+    <delete failonerror="true"
+            includeEmptyDirs="true"
+            quiet="true"
+            verbose="true">
       <fileset dir="${classes}"/>
       <fileset dir="${dist}"/>
     </delete>

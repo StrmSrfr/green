@@ -1,4 +1,5 @@
 TODO
 
 * eval
+* Jar with no external dependencies
 * JUnit
