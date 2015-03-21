@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
 import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
@@ -13,6 +14,9 @@ import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
 public class Green {
+    protected LexicalEnvironment defaultLexicalEnvironment =
+        new LexicalEnvironment();
+
     public static void main(String [] args) throws IOException {
         Green me = new Green();
         try (InputStreamReader isr = new InputStreamReader(System.in);
@@ -30,12 +34,40 @@ public class Green {
     }
 
     public Objet eval(Objet expression) {
+        return eval(expression, defaultLexicalEnvironment);
+    }
+
+    public Objet eval(Objet expression, LexicalEnvironment lexenv) {
         if (expression instanceof Nil) {
             return expression;
         } else if (expression instanceof Symbol) {
-            return new Unbound((Symbol) expression);
+            return new Unbound((Symbol) expression); // TODO
+        } else if (expression instanceof Cons) {
+            return evalCons((Cons) expression, lexenv);
         } else {
             throw new UnsupportedOperationException("TODO!!");
+        }
+    }
+
+    public Objet evalCons(Cons expression, LexicalEnvironment lexenv) {
+        /* CL doesn't define order of function designator evaluation
+           relative to the arguments.
+           TODO: do I want to define it?
+        */
+        /* TODO consider if we want to define special operators in the
+           evaluator (and check for them now) or just have them bound
+           to a special value.  Will the second option (which I'm
+           taking for now) even work?  How will this interact with
+           macros and lexical scope?
+        */
+        Objet first = eval(expression.getCar(), lexenv);
+        if (first instanceof Unbound) {
+            return first;
+        } else if (first instanceof Nil) {
+            throw new UnsupportedOperationException("() is not meaningful in function position... at least not yet");
+        } // TODO functions
+        else {
+            throw new UnsupportedOperationException("Value in functional position was not of an expected type: " + first);
         }
     }
 }

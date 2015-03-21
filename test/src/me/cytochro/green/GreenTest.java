@@ -39,4 +39,32 @@ public class GreenTest {
         Unbound ub = (Unbound) result;
         assertEquals("name of var", "x", ub.getSymbol().getName());
     }
+
+    @Test
+    public void testNestedUnboundFunction() throws IOException {
+        final Green green = new Green();
+        final Objet result = green.eval("((f x) y)");
+        assertTrue("is unbound", result instanceof Unbound);
+        final Unbound ub = (Unbound) result;
+        assertEquals("name of var", "f", ub.getSymbol().getName());
+    }
+
+    @Test
+    public void testUnboundFunction() throws IOException {
+        final Green green = new Green();
+        final Objet result = green.eval("(f x)");
+        assertTrue("is unbound", result instanceof Unbound);
+        final Unbound ub = (Unbound) result;
+        assertEquals("name of var", "f", ub.getSymbol().getName());
+    }
+
+    @Test(expected=UnsupportedOperationException.class)
+    public void testNilInFunctionPosition() throws IOException {
+        new Green().eval("(() a b c)");
+    }
+
+    @Test(expected=UnsupportedOperationException.class)
+    public void testNestedNilInFunctionPosition() throws IOException {
+        new Green().eval("((()) a b c)");
+    }
 }
