@@ -2,4 +2,6 @@ TODO
 
 * eval
 * Jar with no external dependencies
-* JUnit
+* Code coverage
+* Findbugs
+* Checkstyle

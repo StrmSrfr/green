@@ -1,15 +1,23 @@
 <project name="green" default="jar">
-  <property name="classes" value="classes"/>
   <property name="dist" value="dist"/>
-  <property name="lib" value="lib"/>
   <property name="src" value="src"/>
+  <property name="classes" value="classes"/>
+  <property name="lib" value="lib"/>
+  <property name="test.src" value="test/src"/>
+  <property name="test.classes" value="test/classes"/>
+  <property name="test.lib" value="test/lib"/>
   <path id="classpath">
     <pathelement path="${classes}"/>
     <fileset dir="${lib}">
       <include name="**/*.jar"/>
     </fileset>
   </path>
-  <target name="jar" depends="clean,compile,distDir">
+  <path id="test.classpath">
+    <pathelement location="${test.classes}"/>
+    <fileset dir="${test.lib}" includes="*.jar" />
+    <path refid="classpath"/>
+  </path>
+  <target name="jar" depends="clean,test,distDir">
     <jar destfile="${dist}/green.jar"
          basedir="${classes}">
       <manifest>
@@ -24,8 +32,31 @@
             quiet="true"
             verbose="true">
       <fileset dir="${classes}"/>
+      <fileset dir="${test.classes}"/>
       <fileset dir="${dist}"/>
     </delete>
+  </target>
+  <target name="test" depends="compile,compile-tests">
+    <junit haltonerror="on" printsummary="on">
+      <classpath refid="test.classpath"/>
+      <batchtest>
+        <fileset dir="${test.classes}" includes="**/*Test.class"/>
+      </batchtest>
+    </junit>
+  </target>
+  <target name="compile-tests" depends="test.classesDir">
+    <depend srcDir="${test.src}" destDir="${test.clasess}"/>
+    <javac srcDir="${test.src}"
+           destDir="${test.classes}"
+           classpathref="test.classpath"
+           debug="true"
+           deprecation="true"
+           includeantruntime="false"
+           source="1.8"
+           target="1.8"/>
+  </target>
+  <target name="test.classesDir">
+    <mkdir dir="${test.classes}"/>
   </target>
   <target name="compile" depends="classesDir">
     <depend srcDir="${src}" destDir="${clasess}"/>
