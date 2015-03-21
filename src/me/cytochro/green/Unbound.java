@@ -16,6 +16,10 @@ public class Unbound implements Objet {
 
     private final Symbol symbol;
 
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
     public String toString() {
         try {
             return toString(new StringBuffer()).toString();
