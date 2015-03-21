@@ -24,6 +24,11 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
         this.bindings = ImmutableMap.copyOf(bindings);
     }
 
+    public LexicalEnvironment(Symbol name,
+                              Future binding) {
+        this(new LexicalEnvironment(), ImmutableMap.of(name, binding));
+    }
+    
     public LexicalEnvironment(LexicalEnvironment parent,
                               Symbol name,
                               Future binding) {
