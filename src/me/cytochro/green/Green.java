@@ -25,6 +25,10 @@ public class Green {
         }
     }
 
+    public Objet eval(String expressionAsString) throws IOException {
+        return eval(ZSON.read(expressionAsString));
+    }
+
     public Objet eval(Objet expression) {
         if (expression instanceof Nil) {
             return expression;
