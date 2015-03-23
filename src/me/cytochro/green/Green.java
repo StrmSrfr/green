@@ -14,8 +14,9 @@ import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
 public class Green {
-    protected LexicalEnvironment defaultLexicalEnvironment =
-        new LexicalEnvironment();
+    protected final Symbol t = Symbol.intern("t");
+    protected final LexicalEnvironment defaultLexicalEnvironment =
+        new LexicalEnvironment(t, () -> t);
 
     public static void main(String [] args) throws IOException {
         Green me = new Green();
@@ -37,11 +38,20 @@ public class Green {
         return eval(expression, defaultLexicalEnvironment);
     }
 
+    public Symbol getT() {
+        return t;
+    }
+
     public Objet eval(Objet expression, LexicalEnvironment lexenv) {
         if (expression instanceof Nil) {
             return expression;
         } else if (expression instanceof Symbol) {
-            return new Unbound((Symbol) expression); // TODO
+            final Future val = lexenv.get((Symbol) expression);
+            if (val == null) {
+                return new Unbound((Symbol) expression);
+            } else {
+                return val.get();
+            }
         } else if (expression instanceof Cons) {
             return evalCons((Cons) expression, lexenv);
         } else {

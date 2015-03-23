@@ -32,6 +32,13 @@ public class GreenTest {
     }
 
     @Test
+    public void testTIsT() throws IOException {
+        final Green green = new Green();
+        final Objet result = green.eval("t");
+        assertEquals("t", green.getT(), result);
+    }
+
+    @Test
     public void testUnbound()  throws IOException {
         Green green = new Green();
         Objet result = green.eval("x");
