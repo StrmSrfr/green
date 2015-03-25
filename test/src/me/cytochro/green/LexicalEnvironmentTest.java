@@ -28,6 +28,7 @@ public class LexicalEnvironmentTest {
     Mockery context = new JUnit4Mockery();
     
     private static final Symbol X = new Symbol("x");
+    private static final Symbol Y = new Symbol("y");
 
     @Test
     public void testNullLexicalEnvironmentSizeIs0() {
@@ -70,5 +71,13 @@ public class LexicalEnvironmentTest {
             = new LexicalEnvironment(outer, X, f1);
         assertNull("value of inner from outer",
                    outer.get(X));
+    }
+
+    @Test
+    public void testTwoValuesConstructor() {
+        final LexicalEnvironment lexenv =
+            new LexicalEnvironment(X, Y, Y, X);
+        assertEquals(X, lexenv.get(Y).get());
+        assertEquals(Y, lexenv.get(X).get());
     }
 }
