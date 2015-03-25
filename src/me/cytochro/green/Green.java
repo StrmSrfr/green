@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import com.google.common.collect.ImmutableMap;
+
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
 import me.cytochro.zson.Nil;
@@ -13,10 +15,13 @@ import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
+import me.cytochro.green.special.operator.Quote;
+
 public class Green {
-    protected final Symbol t = Symbol.intern("t");
+    protected final Symbol T = Symbol.intern("t");
     protected final LexicalEnvironment defaultLexicalEnvironment =
-        new LexicalEnvironment(t, () -> t);
+        new LexicalEnvironment(T, T,
+                               Quote.QUOTE, new Quote());
 
     public static void main(String [] args) throws IOException {
         Green me = new Green();
@@ -35,22 +40,27 @@ public class Green {
     }
 
     public Objet eval(Objet expression) {
-        return eval(expression, defaultLexicalEnvironment);
+        return evalForFuture(expression, defaultLexicalEnvironment).get();
     }
 
     public Symbol getT() {
-        return t;
+        return T;
     }
 
     public Objet eval(Objet expression, LexicalEnvironment lexenv) {
+        return evalForFuture(expression, lexenv).get();
+    }
+
+    public Future evalForFuture(Objet expression, LexicalEnvironment lexenv) {
         if (expression instanceof Nil) {
-            return expression;
+            return () -> expression;
         } else if (expression instanceof Symbol) {
-            final Future val = lexenv.get((Symbol) expression);
+            Symbol symbol = (Symbol) expression;
+            final Future val = lexenv.get(symbol);
             if (val == null) {
-                return new Unbound((Symbol) expression);
+                return () -> new Unbound(symbol);
             } else {
-                return val.get();
+                return val;
             }
         } else if (expression instanceof Cons) {
             return evalCons((Cons) expression, lexenv);
@@ -59,7 +69,7 @@ public class Green {
         }
     }
 
-    public Objet evalCons(Cons expression, LexicalEnvironment lexenv) {
+    public Future evalCons(Cons expression, LexicalEnvironment lexenv) {
         /* CL doesn't define order of function designator evaluation
            relative to the arguments.
            TODO: do I want to define it?
@@ -72,10 +82,14 @@ public class Green {
         */
         Objet first = eval(expression.getCar(), lexenv);
         if (first instanceof Unbound) {
-            return first;
+            return () -> first;
         } else if (first instanceof Nil) {
             throw new UnsupportedOperationException("() is not meaningful in function position... at least not yet");
-        } // TODO functions
+        } else if (first instanceof SpecialOperator) {
+            SpecialOperator op = (SpecialOperator) first;
+            return op.eval(expression);
+        }
+        // TODO functions
         else {
             throw new UnsupportedOperationException("Value in functional position was not of an expected type: " + first);
         }

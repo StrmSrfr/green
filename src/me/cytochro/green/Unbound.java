@@ -9,7 +9,7 @@ import me.cytochro.zson.Symbol;
 /**
  * Represents an unbound variable.
  */
-public class Unbound implements Objet {
+public class Unbound implements Objet, Future {
     public Unbound(Symbol name) {
         this.symbol = name;
     }
@@ -20,6 +20,11 @@ public class Unbound implements Objet {
         return symbol;
     }
 
+    @Override
+    public Objet get() {
+        return this;
+    }
+    
     public String toString() {
         try {
             return toString(new StringBuffer()).toString();

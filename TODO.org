@@ -1,6 +1,7 @@
 TODO
 
 * eval
+* refactor Cons declarations to be List where appropriate
 * Jar with no external dependencies
 * Code coverage
 * Findbugs

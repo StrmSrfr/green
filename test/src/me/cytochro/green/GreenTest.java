@@ -23,7 +23,11 @@ import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
+import me.cytochro.green.special.operator.Quote;
+
 public class GreenTest {
+    private static final Symbol X = Symbol.intern("x");
+
     @Test
     public void testNilIsNil() throws IOException {
         Green green = new Green();
@@ -73,5 +77,37 @@ public class GreenTest {
     @Test(expected=UnsupportedOperationException.class)
     public void testNestedNilInFunctionPosition() throws IOException {
         new Green().eval("((()) a b c)");
+    }
+
+    @Test
+    public void testQuoteByItself() throws IOException {
+        assertTrue("quote evaluates to its special operator",
+                     new Green().eval("quote") instanceof Quote);
+    }
+
+    @Test
+    public void testQuoteNothing() throws IOException {
+        assertEquals(Nil.NIL, new Green().eval("(quote)"));
+    }
+
+    @Test
+    public void testQuoteNil() throws IOException {
+        assertEquals(Nil.NIL, new Green().eval("(quote ())"));
+    }
+
+    @Test
+    public void testQuoteQuote() throws IOException {
+        assertEquals(Quote.QUOTE, new Green().eval("(quote quote)"));
+    }
+
+    @Test
+    public void testQuoteT() throws IOException {
+        final Green green = new Green();
+        assertEquals(green.getT(), green.eval("(quote t)"));
+    }
+
+    @Test
+    public void testQuoteX() throws IOException {
+        assertEquals(X, new Green().eval("(quote x)"));
     }
 }
