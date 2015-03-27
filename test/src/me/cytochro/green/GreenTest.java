@@ -17,12 +17,15 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 
+import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
 import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
+import me.cytochro.green.exception.ArityException;
+import me.cytochro.green.exception.Unbound;
 import me.cytochro.green.special.operator.Quote;
 
 public class GreenTest {
@@ -109,5 +112,60 @@ public class GreenTest {
     @Test
     public void testQuoteX() throws IOException {
         assertEquals(X, new Green().eval("(quote x)"));
+    }
+
+    @Test
+    public void testQuoteList() throws IOException {
+        assertTrue(new Green().eval("(quote (a list))") instanceof Cons);
+    }
+
+    @Test
+    public void testAtomIsAnAtom() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(atom atom)"));
+    }
+
+    @Test
+    public void testTIsAnAtom() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(atom t)"));
+    }
+
+    @Test
+    public void testNilIsAnAtom() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(atom ())"));
+    }
+
+    @Test
+    public void testQuotedAtom() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(atom (quote x))"));
+    }
+
+    @Test
+    public void testUnboundAtom() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(atom x)") instanceof Unbound);
+    }
+
+    @Test
+    public void testConsIsNotAnAtom() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(atom (quote (a list)))") instanceof Nil);
+    }
+
+    @Test
+    public void testAtomNoArgs() throws IOException {
+        Green green = new Green();
+        Objet o = green.eval("(atom )");
+        assertTrue(o instanceof ArityException);
+    }
+
+    @Test
+    public void testAtomTwoArgs() throws IOException {
+        Green green = new Green();
+        Objet o = green.eval("(atom t t)");
+        assertTrue(o instanceof ArityException);
     }
 }

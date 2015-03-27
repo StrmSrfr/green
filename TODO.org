@@ -2,6 +2,7 @@ TODO
 
 * eval
 * refactor Cons declarations to be List where appropriate
+* refactor Unbound so it doesn't implement Future anymore (Liskov)
 * Jar with no external dependencies
 * Code coverage
 * Findbugs

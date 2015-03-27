@@ -1,4 +1,4 @@
-package me.cytochro.green;
+package me.cytochro.green.exception;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -6,10 +6,13 @@ import java.io.IOException;
 import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 
+import me.cytochro.green.Exception;
+import me.cytochro.green.Future;
+
 /**
  * Represents an unbound variable.
  */
-public class Unbound implements Objet, Future {
+public class Unbound implements Exception, Future {
     public Unbound(Symbol name) {
         this.symbol = name;
     }

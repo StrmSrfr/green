@@ -6,22 +6,29 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import java.util.Arrays;
+
 import com.google.common.collect.ImmutableMap;
 
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
+import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
+import me.cytochro.green.builtin.Atom;
+import me.cytochro.green.exception.Unbound;
 import me.cytochro.green.special.operator.Quote;
 
 public class Green {
-    protected final Symbol T = Symbol.intern("t");
+    protected static final Symbol T = Symbol.intern("t");
     protected final LexicalEnvironment defaultLexicalEnvironment =
-        new LexicalEnvironment(T, T,
-                               Quote.QUOTE, new Quote());
+        new LexicalEnvironment(null,
+                               ImmutableMap.of(T, () -> T,
+                                               Quote.QUOTE, () -> new Quote(),
+                                               Symbol.intern("atom"), () -> new Atom()));
 
     public static void main(String [] args) throws IOException {
         Green me = new Green();
@@ -43,7 +50,7 @@ public class Green {
         return evalForFuture(expression, defaultLexicalEnvironment).get();
     }
 
-    public Symbol getT() {
+    public static Symbol getT() { // TODO: static?
         return T;
     }
 
@@ -58,7 +65,7 @@ public class Green {
             Symbol symbol = (Symbol) expression;
             final Future val = lexenv.get(symbol);
             if (val == null) {
-                return () -> new Unbound(symbol);
+                return new Unbound(symbol);
             } else {
                 return val;
             }
@@ -88,9 +95,15 @@ public class Green {
         } else if (first instanceof SpecialOperator) {
             SpecialOperator op = (SpecialOperator) first;
             return op.eval(expression);
-        }
-        // TODO functions
-        else {
+        } else if (first instanceof Function) {
+            Function f = (Function) first;
+            Objet[] argForms = ((List) expression.getCdr()).toArray();
+            Future[] arguments =
+                Arrays.stream(argForms)
+                .map((form) -> evalForFuture(form, lexenv))
+                .toArray(Future[]::new);
+            return f.apply(arguments);
+        } else {
             throw new UnsupportedOperationException("Value in functional position was not of an expected type: " + first);
         }
     }
