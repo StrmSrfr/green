@@ -22,7 +22,7 @@
          basedir="${classes}">
       <manifest>
         <attribute name="Main-Class" value="me/cytochro/green/Green"/>
-        <attribute name="Class-Path" value="../lib/guava-18.0.jar:../lib/zson-0.0.0.6.jar"/>
+        <attribute name="Class-Path" value="../lib/guava-18.0.jar:../lib/zson-0.0.0.7.jar"/>
       </manifest>
     </jar>
   </target>
