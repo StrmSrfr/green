@@ -4,6 +4,7 @@ TODO
 * refactor Cons declarations to be List where appropriate
 * refactor BuiltinFunctions to derive from AbstractFunction or something
 * refactor Unbound so it doesn't implement Future anymore (Liskov)
+* a type for types
 * Jar with no external dependencies
 * Code coverage
 * Findbugs

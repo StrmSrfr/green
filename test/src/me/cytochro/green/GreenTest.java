@@ -25,6 +25,7 @@ import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
 import me.cytochro.green.exception.ArityException;
+import me.cytochro.green.exception.TypeException;
 import me.cytochro.green.exception.Unbound;
 import me.cytochro.green.special.operator.Quote;
 
@@ -215,5 +216,30 @@ public class GreenTest {
     public void testNotEqFunctions() throws IOException {
         Green green = new Green();
         assertTrue(green.eval("(eq atom eq)") instanceof Nil);
+    }
+
+    @Test
+    public void testCarArity() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(car)") instanceof ArityException);
+        assertTrue(green.eval("(car car car)") instanceof ArityException);
+    }
+
+    @Test
+    public void testCarNil() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(car ())") instanceof Nil);
+    }
+
+    @Test
+    public void testCarAtom() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(car atom)") instanceof TypeException);
+    }
+
+    @Test
+    public void testCarList() throws IOException {
+        Green green = new Green();
+        assertEquals(Symbol.intern("car"), green.eval("(car (quote (car)))"));
     }
 }
