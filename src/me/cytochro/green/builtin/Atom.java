@@ -3,6 +3,7 @@ package me.cytochro.green.builtin;
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.Objet;
 import me.cytochro.zson.Nil;
+import me.cytochro.zson.Symbol;
 
 import me.cytochro.green.Green;
 import me.cytochro.green.BuiltInFunction;
@@ -28,4 +29,11 @@ public class Atom implements BuiltInFunction {
             }
         };
     }
+
+    @Override
+    public Symbol name() {
+        return NAME;
+    }
+
+    private static final Symbol NAME = Symbol.intern("atom");
 }

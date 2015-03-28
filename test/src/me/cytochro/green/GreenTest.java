@@ -100,7 +100,7 @@ public class GreenTest {
 
     @Test
     public void testQuoteQuote() throws IOException {
-        assertEquals(Quote.QUOTE, new Green().eval("(quote quote)"));
+        assertEquals(new Quote().name(), new Green().eval("(quote quote)"));
     }
 
     @Test
@@ -167,5 +167,53 @@ public class GreenTest {
         Green green = new Green();
         Objet o = green.eval("(atom t t)");
         assertTrue(o instanceof ArityException);
+    }
+
+    @Test
+    public void testEqNoArgs() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(eq)")); // TODO should this be true or false?
+    }
+
+    @Test
+    public void testEqOneUnbound() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(eq x)") instanceof Unbound);
+    }
+
+    @Test
+    public void testEqT() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(eq t)"));
+    }
+
+    @Test
+    public void testEqOneQuoted() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(eq (quote x))"));
+    }
+
+    @Test
+    public void testEqTwoQuoted() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(eq (quote x) (quote x))"));
+    }
+
+    @Test
+    public void testEqFunctions() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(), green.eval("(eq atom atom)"));
+    }
+
+    @Test
+    public void testNotEqTwoQuoted() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(eq (quote x) (quote y))") instanceof Nil);
+    }
+
+    @Test
+    public void testNotEqFunctions() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(eq atom eq)") instanceof Nil);
     }
 }
