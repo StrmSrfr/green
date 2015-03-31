@@ -80,4 +80,13 @@ public class LexicalEnvironmentTest {
         assertEquals(X, lexenv.get(Y).get());
         assertEquals(Y, lexenv.get(X).get());
     }
+
+    @Test
+    public void testVarArgsConstructor() {
+        final LexicalEnvironment lexenv =
+            new LexicalEnvironment(LexicalEnvironment.entry(X, Future.of(X)),
+                                   LexicalEnvironment.entry(Y, Future.of(Y)));
+        assertEquals(X, lexenv.get(X).get());
+        assertEquals(Y, lexenv.get(Y).get());
+    }
 }

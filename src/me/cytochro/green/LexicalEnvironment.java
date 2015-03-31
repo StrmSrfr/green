@@ -1,6 +1,7 @@
 package me.cytochro.green;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -56,6 +57,28 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
                               Symbol name,
                               Objet value) {
         this(parent, name, () -> value);
+    }
+
+    public LexicalEnvironment(ImmutableMap.Entry<Symbol, Future> e1,
+                              ImmutableMap.Entry<Symbol, Future>... entries) {
+        this(null, ImmutableMapOf(e1, entries));
+    }
+
+    public static Map.Entry<Symbol, Future> entry(Symbol s, Future f) {
+        return new SimpleImmutableEntry<>(s, f);
+    }
+
+    private static ImmutableMap<Symbol, Future>
+        ImmutableMapOf(Map.Entry<Symbol, Future> e1,
+                       Map.Entry<Symbol, Future>... entries) {
+
+        ImmutableMap.Builder<Symbol, Future> b = new ImmutableMap.Builder<>();
+        b.put(e1);
+        for (Map.Entry<Symbol, Future> entry : entries) {
+            b.put(entry);
+        }
+
+        return b.build();
     }
 
     public Set<Map.Entry<Symbol, Future>> entrySet() {
