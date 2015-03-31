@@ -68,7 +68,9 @@
            deprecation="true"
            includeantruntime="false"
            source="1.8"
-           target="1.8"/>
+           target="1.8">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac>
   </target>
   <target name="classesDir">
     <mkdir dir="${classes}"/>
