@@ -242,4 +242,43 @@ public class GreenTest {
         Green green = new Green();
         assertEquals(Symbol.intern("car"), green.eval("(car (quote (car)))"));
     }
+
+    @Test
+    public void testWeHashcons() throws IOException {
+        Green green = new Green();
+        assertEquals(green.getT(),
+                     green.eval("(eq (cons atom atom) (cons atom atom))"));
+    }
+
+    @Test
+    public void testCarCons() throws IOException {
+        Green green = new Green();
+        assertEquals(green.eval("atom"),
+                     green.eval("(car (cons atom cdr))"));
+    }
+
+    @Test
+    public void testCdrCons() throws IOException {
+        Green green = new Green();
+        assertEquals(green.eval("atom"),
+                     green.eval("(cdr (cons car atom))"));
+    }
+
+    @Test
+    public void testCarConsNil() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(car (cons () atom))") instanceof Nil);
+    }
+
+    @Test
+    public void testCdrConsNil() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(cdr (cons atom ()))") instanceof Nil);
+    }
+
+    @Test
+    public void testConsReturnsCons() throws IOException {
+        Green green = new Green();
+        assertTrue(green.eval("(cons car cdr)") instanceof Cons);
+    }
 }
