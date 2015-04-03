@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
+import me.cytochro.zson.Integer;
 import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
@@ -52,7 +53,8 @@ public class Green {
     }
 
     public Future evalForFuture(Objet expression, LexicalEnvironment lexenv) {
-        if (expression instanceof Nil) {
+        if (expression instanceof Nil
+            || expression instanceof Integer) {
             return () -> expression;
         } else if (expression instanceof Symbol) {
             Symbol symbol = (Symbol) expression;
