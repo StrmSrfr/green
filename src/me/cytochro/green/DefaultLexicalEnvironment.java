@@ -10,24 +10,23 @@ import me.cytochro.green.builtin.Car;
 import me.cytochro.green.builtin.Cdr;
 import me.cytochro.green.builtin.Cons;
 
+import me.cytochro.green.special.operator.If;
 import me.cytochro.green.special.operator.Quote;
 
 public class DefaultLexicalEnvironment extends LexicalEnvironment {
-    public DefaultLexicalEnvironment() {
-        super(entry(Green.getT(), () -> Green.getT()),
-              entry(QUOTE.name(), () -> QUOTE),
-              entry(ATOM .name(), () -> ATOM ),
-              entry(CAR  .name(), () -> CAR  ),
-              entry(CDR  .name(), () -> CDR  ),
-              entry(EQ   .name(), () -> EQ   ),
-              entry(CONS .name(), () -> CONS )
+    public DefaultLexicalEnvironment(Green runtime) {
+        super(entry(runtime.getT(), () -> runtime.getT()),
+              entry(new Quote()),
+              entry(new If   (runtime)),
+              entry(new Atom ()),
+              entry(new Car  ()),
+              entry(new Cdr  ()),
+              entry(new Eq   ()),
+              entry(new Cons ())
               );
+
+        this.runtime = runtime;
     }
 
-    private static final Quote QUOTE = new Quote();
-    private static final Atom  ATOM  = new Atom();
-    private static final Car   CAR   = new Car();
-    private static final Cdr   CDR   = new Cdr();
-    private static final Eq    EQ    = new Eq();
-    private static final Cons  CONS  = new Cons();
+    private final Green runtime;
 }

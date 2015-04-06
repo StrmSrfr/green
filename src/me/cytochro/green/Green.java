@@ -22,7 +22,7 @@ import me.cytochro.green.exception.Unbound;
 public class Green {
     protected static final Symbol T = Symbol.intern("t");
     protected final LexicalEnvironment defaultLexicalEnvironment =
-        new DefaultLexicalEnvironment();
+        new DefaultLexicalEnvironment(this);
 
     public static void main(String [] args) throws IOException {
         Green me = new Green();

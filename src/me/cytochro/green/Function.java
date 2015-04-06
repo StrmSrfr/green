@@ -6,10 +6,6 @@ import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
 
 @FunctionalInterface
-public interface Function extends Objet {
+public interface Function extends Objet, Nameable {
     public Future apply(Future[] arguments);
-
-    public default Objet name() {
-        return Nil.NIL;
-    }
 }

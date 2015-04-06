@@ -4,9 +4,6 @@ import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
 
 @FunctionalInterface
-public interface SpecialOperator {
+public interface SpecialOperator extends Nameable {
     public Future eval(Objet expression);
-    public default Objet name() {
-        return Nil.NIL;
-    }
 }

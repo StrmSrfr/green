@@ -68,6 +68,10 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
         return new SimpleImmutableEntry<>(s, f);
     }
 
+    public static Map.Entry<Symbol, Future> entry(Nameable thing) {
+        return new SimpleImmutableEntry(thing.name(), Future.of(thing));
+    }
+
     private static ImmutableMap<Symbol, Future>
         ImmutableMapOf(Map.Entry<Symbol, Future> e1,
                        Map.Entry<Symbol, Future>... entries) {

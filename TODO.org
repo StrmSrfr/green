@@ -1,6 +1,7 @@
 TODO
 
 * eval
+* JUnit tests for if
 * refactor Cons declarations to be List where appropriate
 * refactor Unbound so it doesn't implement Future anymore (Liskov)
 * JSR305
