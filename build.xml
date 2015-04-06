@@ -37,7 +37,7 @@
     </delete>
   </target>
   <target name="test" depends="compile,compile-tests">
-    <junit haltonerror="on" printsummary="off">
+    <junit haltonerror="on" haltonfailure="on" printsummary="off">
       <formatter type="brief" usefile="false"/>
       <classpath refid="test.classpath"/>
       <batchtest>
