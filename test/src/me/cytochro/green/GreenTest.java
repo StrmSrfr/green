@@ -24,6 +24,8 @@ import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
+import static me.cytochro.green.Assert.assertEvalsEqual;
+
 import me.cytochro.green.exception.ArityException;
 import me.cytochro.green.exception.TypeException;
 import me.cytochro.green.exception.Unbound;
@@ -252,16 +254,15 @@ public class GreenTest {
 
     @Test
     public void testCarCons() throws IOException {
-        Green green = new Green();
-        assertEquals(green.eval("atom"),
-                     green.eval("(car (cons atom cdr))"));
+        assertEvalsEqual("atom",
+                         "(car (cons atom cdr))");
     }
 
     @Test
     public void testCdrCons() throws IOException {
         Green green = new Green();
-        assertEquals(green.eval("atom"),
-                     green.eval("(cdr (cons car atom))"));
+        assertEvalsEqual("atom",
+                         "(cdr (cons car atom))");
     }
 
     @Test
