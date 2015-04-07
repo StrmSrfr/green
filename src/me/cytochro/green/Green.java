@@ -29,6 +29,9 @@ public class Green {
         try (InputStreamReader isr = new InputStreamReader(System.in);
              BufferedReader in = new BufferedReader(isr);
              PrintWriter out = new PrintWriter(System.out)) {
+            out.flush();
+            System.out.print("> ");
+            System.out.flush();
             for (Objet o = ZSON.read(in); !(o instanceof EOF); o = ZSON.read(in)) {
                 ZSON.write(me.eval(o), out);
                 out.flush();
