@@ -31,5 +31,13 @@ public class ArityException implements Exception {
         return actual;
     }
 
+    public int getMinExpected() {
+        return minExpected;
+    }
+
+    public int getMaxExpected() {
+        return maxExpected;
+    }
+
     // TODO more getters, toString
 }

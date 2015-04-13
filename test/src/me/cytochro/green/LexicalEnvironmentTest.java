@@ -29,6 +29,7 @@ public class LexicalEnvironmentTest {
     
     private static final Symbol X = new Symbol("x");
     private static final Symbol Y = new Symbol("y");
+    private static final Symbol Z = new Symbol("z");
 
     @Test
     public void testNullLexicalEnvironmentSizeIs0() {
@@ -88,5 +89,15 @@ public class LexicalEnvironmentTest {
                                    LexicalEnvironment.entry(Y, Future.of(Y)));
         assertEquals(X, lexenv.get(X).get());
         assertEquals(Y, lexenv.get(Y).get());
+    }
+
+    @Test
+    public void testShadowing() {
+        final LexicalEnvironment outer =
+            new LexicalEnvironment(X, Y);
+        final LexicalEnvironment inner =
+            new LexicalEnvironment(outer, X, Z);
+        assertEquals(Z, inner.get(X).get());
+        assertEquals(Y, outer.get(X).get());
     }
 }

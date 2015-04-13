@@ -5,5 +5,5 @@ import me.cytochro.zson.Objet;
 
 @FunctionalInterface
 public interface SpecialOperator extends Nameable {
-    public Future eval(Objet expression);
+    public Future eval(Objet expression, LexicalEnvironment lexenv);
 }

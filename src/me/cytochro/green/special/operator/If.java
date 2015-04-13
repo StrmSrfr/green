@@ -9,12 +9,13 @@ import me.cytochro.zson.Symbol;
 import me.cytochro.green.Exception;
 import me.cytochro.green.Future;
 import me.cytochro.green.Green;
+import me.cytochro.green.LexicalEnvironment;
 import me.cytochro.green.SpecialOperator;
 
 import me.cytochro.green.exception.ArityException;
 
 public class If implements Objet, SpecialOperator {
-    public Future eval(Objet expression) {
+    public Future eval(Objet expression, LexicalEnvironment lexenv) {
         final Cons expr = (Cons) expression;
         assert (IF.equals(expr.getCar()));
         final Objet[] body = ((List) expr.getCdr()).toArray();
@@ -23,17 +24,17 @@ public class If implements Objet, SpecialOperator {
             return () -> new ArityException(null, formCount, 2, 3);
         }
         return () -> {
-            final Objet which = runtime.eval(body[0]);
+            final Objet which = runtime.eval(body[0], lexenv);
             if (which instanceof Exception) {
                 return which;
             } else if (which instanceof Nil) {
                 if (formCount == 2) {
                     return Nil.NIL;
                 } else {
-                    return runtime.eval(body[2]);
+                    return runtime.eval(body[2], lexenv);
                 }
             } else {
-                return runtime.eval(body[1]);
+                return runtime.eval(body[1], lexenv);
             }
         };
     }

@@ -11,18 +11,20 @@ import me.cytochro.green.builtin.Cdr;
 import me.cytochro.green.builtin.Cons;
 
 import me.cytochro.green.special.operator.If;
+import me.cytochro.green.special.operator.Lambda;
 import me.cytochro.green.special.operator.Quote;
 
 public class DefaultLexicalEnvironment extends LexicalEnvironment {
     public DefaultLexicalEnvironment(Green runtime) {
         super(entry(runtime.getT(), () -> runtime.getT()),
-              entry(new Quote()),
-              entry(new If   (runtime)),
-              entry(new Atom ()),
-              entry(new Car  ()),
-              entry(new Cdr  ()),
-              entry(new Eq   ()),
-              entry(new Cons ())
+              entry(new If    (runtime)),
+              entry(new Lambda(runtime)),
+              entry(new Quote ()),
+              entry(new Atom  ()),
+              entry(new Car   ()),
+              entry(new Cdr   ()),
+              entry(new Eq    ()),
+              entry(new Cons  ())
               );
 
         this.runtime = runtime;

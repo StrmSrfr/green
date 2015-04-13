@@ -1,7 +1,5 @@
 package me.cytochro.green;
 
-import java.util.Optional;
-
 import me.cytochro.zson.Nil;
 import me.cytochro.zson.Objet;
 

@@ -92,7 +92,7 @@ public class Green {
             throw new UnsupportedOperationException("() is not meaningful in function position... at least not yet");
         } else if (first instanceof SpecialOperator) {
             SpecialOperator op = (SpecialOperator) first;
-            return op.eval(expression);
+            return op.eval(expression, lexenv);
         } else if (first instanceof Function) {
             Function f = (Function) first;
             Objet[] argForms = ((List) expression.getCdr()).toArray();
