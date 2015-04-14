@@ -6,6 +6,7 @@ import me.cytochro.zson.Symbol;
 
 import me.cytochro.green.builtin.Atom;
 import me.cytochro.green.builtin.Eq;
+import me.cytochro.green.builtin.Eval;
 import me.cytochro.green.builtin.Car;
 import me.cytochro.green.builtin.Cdr;
 import me.cytochro.green.builtin.Cons;
@@ -24,6 +25,7 @@ public class DefaultLexicalEnvironment extends LexicalEnvironment {
               entry(new Car   ()),
               entry(new Cdr   ()),
               entry(new Eq    ()),
+              entry(new Eval  (runtime)),
               entry(new Cons  ())
               );
 
