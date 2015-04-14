@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.StringReader;
+import java.io.Writer;
 
 import java.util.Arrays;
 
 import me.cytochro.zson.Cons;
-import me.cytochro.zson.EOF;
 import me.cytochro.zson.Integer;
 import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
@@ -18,25 +19,25 @@ import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
 import me.cytochro.green.exception.Unbound;
+import me.cytochro.green.special.operator.Repl;
 
 public class Green {
     protected static final Symbol T = Symbol.intern("t");
     protected final LexicalEnvironment defaultLexicalEnvironment =
         new DefaultLexicalEnvironment(this);
 
+    public final Reader in;
+    public final Writer out;
+
+    public Green() {
+        InputStreamReader isr = new InputStreamReader(System.in);
+        in = new BufferedReader(isr);
+        out = new PrintWriter(System.out);
+    }
+
     public static void main(String [] args) throws IOException {
         Green me = new Green();
-        try (InputStreamReader isr = new InputStreamReader(System.in);
-             BufferedReader in = new BufferedReader(isr);
-             PrintWriter out = new PrintWriter(System.out)) {
-            out.flush();
-            System.out.print("> ");
-            System.out.flush();
-            for (Objet o = ZSON.read(in); !(o instanceof EOF); o = ZSON.read(in)) {
-                ZSON.write(me.eval(o), out);
-                out.flush();
-            }
-        }
+        me.eval("(repl)");
     }
 
     public Objet eval(String expressionAsString) throws IOException {

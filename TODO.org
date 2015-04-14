@@ -1,7 +1,6 @@
 TODO
 
 * macrolet
-* repl special operator
 * document built-in functions and special operators in readme
 * rename Objet to T
 * 0.0.1
