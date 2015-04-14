@@ -89,10 +89,10 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
         if (parent == null) {
             return bindings.entrySet();
         } else {
-            Set<Map.Entry<Symbol, Future>> result = new HashSet<>();
-            result.addAll(bindings.entrySet());
-            result.addAll(parent.entrySet());
-            return ImmutableSet.copyOf(result);
+            Map<Symbol, Future> result = new HashMap<>();
+            result.putAll(parent);
+            result.putAll(bindings);
+            return ImmutableSet.copyOf(result.entrySet());
         }
     }
 

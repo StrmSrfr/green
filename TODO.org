@@ -3,7 +3,6 @@ TODO
 * document built-in functions and special operators in readme
 * eval
 * rename Objet to T
-* figure out weird lambda implementation bug
 * refactor Cons declarations to be List where appropriate
 * refactor Unbound so it doesn't implement Future anymore (Liskov)
 * JSR305

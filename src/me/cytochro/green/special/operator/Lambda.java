@@ -63,7 +63,6 @@ public class Lambda implements Objet, SpecialOperator {
                         new LexicalEnvironment(lexenv, b.build());
                     
                     Objet expression = body.getCar(); // TODO implicit progn-like-thing
-                    //return () -> runtime.eval(expression, inner); // Y U NO WORK
                     return runtime.evalForFuture(expression, inner);
                 }
             };
