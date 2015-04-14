@@ -7,8 +7,8 @@ import com.google.common.collect.ImmutableMap;
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Exception;
 import me.cytochro.green.Function;
@@ -20,22 +20,22 @@ import me.cytochro.green.SpecialOperator;
 import me.cytochro.green.exception.ArityException;
 import me.cytochro.green.exception.Unbound;
 
-public class Lambda implements Objet, SpecialOperator {
+public class Lambda implements T, SpecialOperator {
     @Override
-    public Future eval(Objet expression, LexicalEnvironment lexenv) {
+    public Future eval(T expression, LexicalEnvironment lexenv) {
         return () -> {
             assert (expression instanceof Cons);
             final Cons expr = (Cons) expression;
-            final Objet lambda = expr.getCar();
+            final T lambda = expr.getCar();
             assert (LAMBDA.equals(lambda));
-            final Objet restO = expr.getCdr();
+            final T restO = expr.getCdr();
             assert (restO instanceof Cons);
             final Cons rest = (Cons) restO;
-            final Objet parmsO = rest.getCar();
+            final T parmsO = rest.getCar();
             assert (parmsO instanceof List);
             final List parmsList = (List) parmsO;
-            final Objet[] parameters = parmsList.toArray();
-            final Objet bodyO = rest.getCdr();
+            final T[] parameters = parmsList.toArray();
+            final T bodyO = rest.getCdr();
             assert (bodyO instanceof List);
             final List body = (List) bodyO;
             return new Function() {
@@ -62,7 +62,7 @@ public class Lambda implements Objet, SpecialOperator {
                     final LexicalEnvironment inner =
                         new LexicalEnvironment(lexenv, b.build());
                     
-                    Objet expression = body.getCar(); // TODO implicit progn-like-thing
+                    T expression = body.getCar();
                     return runtime.evalForFuture(expression, inner);
                 }
             };

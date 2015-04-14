@@ -2,12 +2,12 @@ package me.cytochro.green;
 
 import java.util.Arrays;
 
-import me.cytochro.zson.Objet;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.exception.ArityException;
 
 public abstract class BuiltInFunction implements Function {
-    public abstract Objet apply(Objet[] arguments);
+    public abstract T apply(T[] arguments);
 
     public BuiltInFunction(Integer minArgs, Integer maxArgs) {
         this.minArgs = minArgs;
@@ -23,12 +23,12 @@ public abstract class BuiltInFunction implements Function {
                                           minArgs, maxArgs);
             }
             
-            Objet[] args =
+            T[] args =
                 Arrays.stream(arguments)
                 .map(Future::get)
-                .toArray(Objet[]::new);
+                .toArray(T[]::new);
 
-            for (Objet a : args) {
+            for (T a : args) {
                 if (a instanceof Exception) {
                     return a;
                 }

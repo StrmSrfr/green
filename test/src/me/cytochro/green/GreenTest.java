@@ -20,7 +20,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
 import me.cytochro.zson.Nil;
-import me.cytochro.zson.Objet;
+import me.cytochro.zson.T;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
 
@@ -37,21 +37,21 @@ public class GreenTest {
     @Test
     public void testNilIsNil() throws IOException {
         Green green = new Green();
-        Objet result = green.eval("()");
+        T result = green.eval("()");
         assertTrue("is nil", result instanceof Nil);
     }
 
     @Test
     public void testTIsT() throws IOException {
         final Green green = new Green();
-        final Objet result = green.eval("t");
+        final T result = green.eval("t");
         assertEquals("t", green.getT(), result);
     }
 
     @Test
     public void testUnbound()  throws IOException {
         Green green = new Green();
-        Objet result = green.eval("x");
+        T result = green.eval("x");
         assertTrue("is unbound", result instanceof Unbound);
         Unbound ub = (Unbound) result;
         assertEquals("name of var", "x", ub.getSymbol().getName());
@@ -60,7 +60,7 @@ public class GreenTest {
     @Test
     public void testNestedUnboundFunction() throws IOException {
         final Green green = new Green();
-        final Objet result = green.eval("((f x) y)");
+        final T result = green.eval("((f x) y)");
         assertTrue("is unbound", result instanceof Unbound);
         final Unbound ub = (Unbound) result;
         assertEquals("name of var", "f", ub.getSymbol().getName());
@@ -69,7 +69,7 @@ public class GreenTest {
     @Test
     public void testUnboundFunction() throws IOException {
         final Green green = new Green();
-        final Objet result = green.eval("(f x)");
+        final T result = green.eval("(f x)");
         assertTrue("is unbound", result instanceof Unbound);
         final Unbound ub = (Unbound) result;
         assertEquals("name of var", "f", ub.getSymbol().getName());
@@ -161,14 +161,14 @@ public class GreenTest {
     @Test
     public void testAtomNoArgs() throws IOException {
         Green green = new Green();
-        Objet o = green.eval("(atom )");
+        T o = green.eval("(atom )");
         assertTrue(o instanceof ArityException);
     }
 
     @Test
     public void testAtomTwoArgs() throws IOException {
         Green green = new Green();
-        Objet o = green.eval("(atom t t)");
+        T o = green.eval("(atom t t)");
         assertTrue(o instanceof ArityException);
     }
 

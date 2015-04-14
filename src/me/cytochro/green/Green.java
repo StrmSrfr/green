@@ -14,9 +14,9 @@ import me.cytochro.zson.Cons;
 import me.cytochro.zson.Integer;
 import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.exception.Unbound;
 import me.cytochro.green.special.operator.Repl;
@@ -40,11 +40,11 @@ public class Green {
         me.eval("(repl)");
     }
 
-    public Objet eval(String expressionAsString) throws IOException {
+    public T eval(String expressionAsString) throws IOException {
         return eval(ZSON.read(expressionAsString));
     }
 
-    public Objet eval(Objet expression) {
+    public T eval(T expression) {
         return evalForFuture(expression, defaultLexicalEnvironment).get();
     }
 
@@ -52,11 +52,11 @@ public class Green {
         return T;
     }
 
-    public Objet eval(Objet expression, LexicalEnvironment lexenv) {
+    public T eval(T expression, LexicalEnvironment lexenv) {
         return evalForFuture(expression, lexenv).get();
     }
 
-    public Future evalForFuture(Objet expression, LexicalEnvironment lexenv) {
+    public Future evalForFuture(T expression, LexicalEnvironment lexenv) {
         if (expression instanceof Nil
             || expression instanceof Integer) {
             return () -> expression;
@@ -86,7 +86,7 @@ public class Green {
            taking for now) even work?  How will this interact with
            macros and lexical scope?
         */
-        Objet first = eval(expression.getCar(), lexenv);
+        T first = eval(expression.getCar(), lexenv);
         if (first instanceof Unbound) {
             return () -> first;
         } else if (first instanceof Nil) {
@@ -96,7 +96,7 @@ public class Green {
             return op.eval(expression, lexenv);
         } else if (first instanceof Function) {
             Function f = (Function) first;
-            Objet[] argForms = ((List) expression.getCdr()).toArray();
+            T[] argForms = ((List) expression.getCdr()).toArray();
             Future[] arguments =
                 Arrays.stream(argForms)
                 .map((form) -> evalForFuture(form, lexenv))

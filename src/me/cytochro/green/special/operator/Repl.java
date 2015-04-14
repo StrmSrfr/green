@@ -11,9 +11,9 @@ import me.cytochro.zson.Cons;
 import me.cytochro.zson.EOF;
 import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.ZSON;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Exception;
 import me.cytochro.green.Function;
@@ -25,9 +25,9 @@ import me.cytochro.green.SpecialOperator;
 import me.cytochro.green.exception.ArityException;
 import me.cytochro.green.exception.Unbound;
 
-public class Repl implements Objet, SpecialOperator {
+public class Repl implements T, SpecialOperator {
     @Override
-    public Future eval(Objet expression, LexicalEnvironment lexenv) {
+    public Future eval(T expression, LexicalEnvironment lexenv) {
         return () -> {
             try {
                 assert (expression instanceof Nil);
@@ -35,8 +35,8 @@ public class Repl implements Objet, SpecialOperator {
                 final Writer out = runtime.out;
                 out.write("> ");
                 out.flush();
-                Objet star = new EOF();
-                Objet input;
+                T star = new EOF();
+                T input;
                 while (!((input = ZSON.read(in)) instanceof EOF)) {
                     star = runtime.eval(input);
                     ZSON.write(star, out);

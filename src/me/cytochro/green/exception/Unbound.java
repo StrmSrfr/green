@@ -3,8 +3,8 @@ package me.cytochro.green.exception;
 import java.io.IOError;
 import java.io.IOException;
 
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Exception;
 import me.cytochro.green.Future;
@@ -24,7 +24,7 @@ public class Unbound implements Exception, Future {
     }
 
     @Override
-    public Objet get() {
+    public T get() {
         return this;
     }
     

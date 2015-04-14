@@ -1,22 +1,22 @@
 package me.cytochro.green.builtin;
 
 import me.cytochro.zson.Cons;
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Nil;
 import me.cytochro.zson.Symbol;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Green;
 import me.cytochro.green.BuiltInFunction;
 
 public class Eq extends BuiltInFunction {
     @Override
-    public Objet apply(Objet[] arguments) {
+    public T apply(T[] arguments) {
         if (0 == arguments.length) {
             return Green.getT();
         }
 
-        Objet o = arguments[0];
-        for (Objet a : arguments) {
+        T o = arguments[0];
+        for (T a : arguments) {
             if (a != o) {
                 return Nil.NIL;
             }

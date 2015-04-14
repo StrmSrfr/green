@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-import me.cytochro.zson.Objet;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Function;
 import me.cytochro.green.Green;
@@ -38,7 +38,7 @@ public class LambdaTest {
     @Test
     public void testArityTooHigh() throws IOException {
         Green green = new Green();
-        Objet result = green.eval("((lambda () atom) atom)");
+        T result = green.eval("((lambda () atom) atom)");
         ArityException ae = (ArityException) result;
         assertEquals("expected max args", 0, ae.getMaxExpected());
         assertEquals("expected min args", 0, ae.getMinExpected());
@@ -53,7 +53,7 @@ public class LambdaTest {
     @Test
     public void testOneArgConstantlyUnbound() throws IOException {
         Green green = new Green();
-        Objet result = green.eval("((lambda (x) t) x)");
+        T result = green.eval("((lambda (x) t) x)");
         assertTrue(result instanceof Unbound);
     }
 
@@ -65,14 +65,14 @@ public class LambdaTest {
     @Test
     public void testOneArgIdentityUnbound() throws IOException {
         Green green = new Green();
-        Objet result = green.eval("((lambda (x) x) y)");
+        T result = green.eval("((lambda (x) x) y)");
         assertTrue(result instanceof Unbound);
     }
 
     @Test
     public void testOneArgInnerUnbound() throws IOException {
         Green green = new Green();
-        Objet result = green.eval("((lambda (x) y) atom)");
+        T result = green.eval("((lambda (x) y) atom)");
         assertTrue(result instanceof Unbound);
     }
 

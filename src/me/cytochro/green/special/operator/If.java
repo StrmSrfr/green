@@ -3,8 +3,8 @@ package me.cytochro.green.special.operator;
 import me.cytochro.zson.Cons;
 import me.cytochro.zson.List;
 import me.cytochro.zson.Nil;
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Exception;
 import me.cytochro.green.Future;
@@ -14,17 +14,17 @@ import me.cytochro.green.SpecialOperator;
 
 import me.cytochro.green.exception.ArityException;
 
-public class If implements Objet, SpecialOperator {
-    public Future eval(Objet expression, LexicalEnvironment lexenv) {
+public class If implements T, SpecialOperator {
+    public Future eval(T expression, LexicalEnvironment lexenv) {
         final Cons expr = (Cons) expression;
         assert (IF.equals(expr.getCar()));
-        final Objet[] body = ((List) expr.getCdr()).toArray();
+        final T[] body = ((List) expr.getCdr()).toArray();
         final int formCount = body.length;
         if (formCount < 2 || formCount > 3) {
             return () -> new ArityException(null, formCount, 2, 3);
         }
         return () -> {
-            final Objet which = runtime.eval(body[0], lexenv);
+            final T which = runtime.eval(body[0], lexenv);
             if (which instanceof Exception) {
                 return which;
             } else if (which instanceof Nil) {

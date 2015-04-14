@@ -1,24 +1,24 @@
 package me.cytochro.green.exception;
 
-import me.cytochro.zson.Objet;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Exception;
 
 public class TypeException implements Exception {
-    private final Objet expected;
-    private final Objet actual;
+    private final T expected;
+    private final T actual;
 
-    public TypeException(Objet expected,
-                         Objet actual) {
+    public TypeException(T expected,
+                         T actual) {
         this.expected = expected;
         this.actual = actual;
     }
 
-    public Objet getExpected() {
+    public T getExpected() {
         return expected;
     }
     
-    public Objet getACtual() {
+    public T getActual() {
         return actual;
     }
 }

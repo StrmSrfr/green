@@ -10,8 +10,8 @@ import java.util.Set;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
-import me.cytochro.zson.Objet;
 import me.cytochro.zson.Symbol;
+import me.cytochro.zson.T;
 
 import me.cytochro.green.Future;
 
@@ -30,7 +30,7 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
         this(new LexicalEnvironment(), ImmutableMap.of(name, binding));
     }
 
-    public LexicalEnvironment(Symbol name, Objet value) {
+    public LexicalEnvironment(Symbol name, T value) {
         this(name, () -> value);
     }
 
@@ -40,8 +40,8 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
                                                        n2, b2));
     }
 
-    public LexicalEnvironment(Symbol n1, Objet v1,
-                              Symbol n2, Objet v2) {
+    public LexicalEnvironment(Symbol n1, T v1,
+                              Symbol n2, T v2) {
         this(n1, () -> v1,
              n2, () -> v2);
     }
@@ -55,7 +55,7 @@ public class LexicalEnvironment extends AbstractMap<Symbol, Future> {
 
     public LexicalEnvironment(LexicalEnvironment parent,
                               Symbol name,
-                              Objet value) {
+                              T value) {
         this(parent, name, () -> value);
     }
 
