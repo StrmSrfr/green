@@ -1,3 +1,5 @@
+# Green 0.0.1: "Cosmic Dust"
+
 This is a rough-draft sneak-peek developer-preview release of Green.
 Everything may change between now and the 1.0.
 
@@ -115,3 +117,89 @@ takes on the value of that exception rather than whatever value it
 might otherwise have.  Thus, exceptions propogate rather like NaN.
 Each special operator has its own rules as to the value of its
 expression in the face of an exceptional subexpression.
+
+# Special Operators
+
+## Quote
+
+Quote is the simplest special operator.  It is used in this way:
+
+    (quote x)
+
+Quote prevents the evaluation of its operand.  So in this case,
+`(quote x)` evaluates to the symbol `x`, whereas just `x` would have
+caused an error that `x` is not bound to a value.
+
+Quote can also quote more complicated structures.
+
+## If
+
+The if operator takes the following form:
+
+    (if condition then [else])
+
+The square brackets here are metasyntax indicating that the `else`
+portion is optional.
+
+If the condition is exceptional, if returns it.  If the condition is
+true, if returns the evaluation of the `then` portion.  If the
+condition is false, if returns the evaluation of the `else` portion.
+If there is no else portion and it would be returned, if returns the
+empty list.
+
+## Lambda
+
+Lambda is used to create functions and bindings.  It takes this form:
+
+    (lambda list expression)
+
+Where the `list` is a list of symbols.  Lambda returns a function.
+When the function is called, the `expression` is evaluated in a
+lexical environment constructed by combining the lexical environment
+in which the lambda expression appeared with a lexical enviroment
+created by binding each symbol in the lambda list to the corresponding
+argument in the function invocation.
+
+For example, this will return the symbol `y`:
+
+    ((lambda (x) x) (quote y))
+
+## Macrolet
+
+Macrolet is used to create macros.  Within the body of a macrolet
+defining a macro named `macrox`, expressions of the form `(macrox
+...)` will be replaced with the result of calling macrox's expansion
+function on the unevaluated arguments, and then the new form is
+evaluated.
+
+Macrolet takes the form:
+
+    (macrolet macros body)
+
+Where `macros` is a list of items of this shape:
+
+    (name arguments expression)
+
+Here `name` is the name of the macro and the rest is similar to a
+lambda expression.  The `arguments` is a list of symbols which will be
+replaced with the unevaluated forms in the expression to determine the
+expansion.
+
+Here is an example from the test suite:
+
+    (macrolet ((macrox () (quote x)))
+      (macrox))
+
+This defines a macro named `macrox` with an expansion function of no
+arguments.  The expansion function evaluates to the symbol x.  Thus,
+the form `(macrox)` is replaced with `x` prior to evaluation, which
+causes an error as x has not been bound.
+
+## repl
+
+The repl special form is a total hack.  It gives you a new repl in
+which the lexical environment is the lexical environment in which it
+appears.  When end of file is reached, the repl form returns the last
+value that it printed.
+
+# Running

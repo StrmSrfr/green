@@ -58,6 +58,11 @@ public class LambdaTest {
     }
 
     @Test
+    public void testReadmeExample() throws IOException {
+        assertEvalsEqual("(quote y)", "((lambda (x) x) (quote y))");
+    }
+
+    @Test
     public void testOneArgIdentity() throws IOException {
         assertEvalsEqual("atom", "((lambda (x) x) atom)");
     }
