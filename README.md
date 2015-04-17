@@ -264,6 +264,10 @@ object identity.  Currently, the following things are eq:
 
 Notably no integers are eq, but this is likely to change.
 
+It is also worth noting that `(eq)`, `(eq ())`, and `(eq () ())` are
+true, which is why `eq` returns `t` instead of one of its arguments
+when they satisfy the condition.
+
 ### eval
 
     (eval form)
