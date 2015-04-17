@@ -1,6 +1,5 @@
 TODO
 
-* macrolet
 * document built-in functions and special operators in readme
 * 0.0.1
 * refactor Cons declarations to be List where appropriate

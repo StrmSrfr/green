@@ -71,7 +71,9 @@ public class Green {
         } else if (expression instanceof Cons) {
             return evalCons((Cons) expression, lexenv);
         } else {
-            throw new UnsupportedOperationException("TODO!!");
+            throw new UnsupportedOperationException("Don't know how to eval a "
+                                                    + expression +
+                                                    " yet.");
         }
     }
 
@@ -91,13 +93,13 @@ public class Green {
             return () -> first;
         } else if (first instanceof Nil) {
             throw new UnsupportedOperationException("() is not meaningful in function position... at least not yet");
-        } else if (first instanceof SpecialOperator) {
-            SpecialOperator op = (SpecialOperator) first;
+        } else if (first instanceof Evalable) {
+            Evalable op = (Evalable) first;
             return op.eval(expression, lexenv);
         } else if (first instanceof Function) {
-            Function f = (Function) first;
-            T[] argForms = ((List) expression.getCdr()).toArray();
-            Future[] arguments =
+            final Function f = (Function) first;
+            final T[] argForms = ((List) expression.getCdr()).toArray();
+            final Future[] arguments =
                 Arrays.stream(argForms)
                 .map((form) -> evalForFuture(form, lexenv))
                 .toArray(Future[]::new);
