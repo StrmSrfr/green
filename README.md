@@ -118,9 +118,26 @@ might otherwise have.  Thus, exceptions propogate rather like NaN.
 Each special operator has its own rules as to the value of its
 expression in the face of an exceptional subexpression.
 
-# Special Operators
+# Built in values
 
-## Quote
+## nil
+
+Nil is the empty list, and the false value.  It is written `()`.
+Unlike some other lisps, the symbol `nil` is not bound to anything by
+default.
+
+## t
+
+T is bound to evaluate to the symbol with the name "t".  It is true.
+It is worth remembering that anything that is not nil is true, so
+predicates will generally return a more useful value if appropriate.
+
+There is nothing stopping you from rebinding `t` to evaluate to a
+different value, even nil.
+
+## Special Operators
+
+### Quote
 
 Quote is the simplest special operator.  It is used in this way:
 
@@ -132,7 +149,7 @@ caused an error that `x` is not bound to a value.
 
 Quote can also quote more complicated structures.
 
-## If
+### If
 
 The if operator takes the following form:
 
@@ -147,7 +164,7 @@ condition is false, if returns the evaluation of the `else` portion.
 If there is no else portion and it would be returned, if returns the
 empty list.
 
-## Lambda
+### Lambda
 
 Lambda is used to create functions and bindings.  It takes this form:
 
@@ -164,7 +181,7 @@ For example, this will return the symbol `y`:
 
     ((lambda (x) x) (quote y))
 
-## Macrolet
+### Macrolet
 
 Macrolet is used to create macros.  Within the body of a macrolet
 defining a macro named `macrox`, expressions of the form `(macrox
@@ -195,11 +212,96 @@ arguments.  The expansion function evaluates to the symbol x.  Thus,
 the form `(macrox)` is replaced with `x` prior to evaluation, which
 causes an error as x has not been bound.
 
-## repl
+### repl
 
 The repl special form is a total hack.  It gives you a new repl in
 which the lexical environment is the lexical environment in which it
 appears.  When end of file is reached, the repl form returns the last
 value that it printed.
 
+## Built-in functions
+
+### atom
+
+    (atom arg)
+
+Atom returns `t` if its argument is not a cons.  Notably, although
+most lists are not atoms, the empty list (nil) is an atom, which is
+also why `atom` does not simply return its argument.
+
+### car
+
+    (car list)
+
+Car returns the first element of a list.  When used on an empty list,
+car returns an empty list.
+
+### cdr
+
+    (cdr list)
+
+If `list` is the empty list, cdr returns the empty list.  If `list` is
+a proper list, `cdr` returns the rest of that list without the first
+element.  If `list` is a cons cell whose cdr member is not a list, cdr
+returns that member.
+
+### eq
+
+    (eq x y)
+    (eq)
+    (eq z)
+    (eq a b c...)
+
+Eq defines a certain type of equality or sameness, also called eq.  Eq
+returns `t` if all of its arguments are eq.  Eq corresponds with
+object identity.  Currently, the following things are eq:
+
+* Interned symbols with the same name.  (There are no interned symbols
+  yet).
+* Function, macro, and special operator objects are eq with themselves.
+* Nil is eq to nil.
+* Cons cells are eq to other cons cells if their cars and cdrs are eq.
+
+Notably no integers are eq, but this is likely to change.
+
+### eval
+
+    (eval form)
+
+Eval returns the result of evaluating the form passed to it in the
+default lexical environment.
+
+### cons
+
+    (cons car cdr)
+    
+Cons creates or retrieves a cons cell with the provided car and cdr
+members.  This can be used to construct proper lists and dotted
+lists.
+
+A proper list is a sequence of cons cells where every cons
+cell's cdr is also a proper list.
+
+A dotted list is a sequence of cons cells where the cdr of the last cons
+is an object that is not nil (or a cons).
+
+A circular list is a sequence of cons cells where a cell appears in
+its own cdr or a cdr of another cell in the sequence.  It is not
+currently possible to create circular lists in Green.
+
 # Running
+
+You should be able to run green simply by building it with ant:
+
+    ant
+
+and running the jar:
+
+    java -jar dist/green.jar
+
+This will give you a REPL (read-eval-print loop) that repeatedly
+prints a prompt, and then reads in a green expression, and prints the
+value of that green expression.  When EOF is reached, the REPL
+terminates.  Currently there seems to be a bug that you have to end
+standard input twice before the repl terminates; I haven't debugged it
+yet.
