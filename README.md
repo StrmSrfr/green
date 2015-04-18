@@ -19,6 +19,8 @@ programs as well.
 
 Green requires Java 8.
 
+Building Green requires ant.
+
 # The type hierarchy
 
 Green programs operate on values which have types.
