@@ -1,6 +1,5 @@
 TODO
 
-* Allow a symbol in lambda-list position for varargs
 * refactor Cons declarations to be List where appropriate
 * refactor Unbound so it doesn't implement Future anymore (Liskov)
 * every expression in an implicit progn runs in its own thread!

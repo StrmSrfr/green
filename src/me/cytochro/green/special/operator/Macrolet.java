@@ -43,7 +43,7 @@ public class Macrolet implements T, SpecialOperator {
         final Lambda.Guts[] guts =
             Arrays.stream(macros)
             .map(Cons::getCdr)
-            .map(g -> new Lambda.Guts((Cons) g, lexenv, runtime))
+            .map(g -> Lambda.Guts.newInstance((Cons) g, lexenv, runtime))
             .toArray(Lambda.Guts[]::new);
 
         ImmutableMap.Builder<Symbol, Future> b = new ImmutableMap.Builder<>();

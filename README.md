@@ -183,6 +183,9 @@ For example, this will return the symbol `y`:
 
     ((lambda (x) x) (quote y))
 
+You can also place a symbol in the list position, in which case that
+symbol will be bound to a list of all the arguments.
+
 ### Macrolet
 
 Macrolet is used to create macros.  Within the body of a macrolet
