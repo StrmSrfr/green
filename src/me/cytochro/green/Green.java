@@ -64,7 +64,7 @@ public class Green {
             Symbol symbol = (Symbol) expression;
             final Future val = lexenv.get(symbol);
             if (val == null) {
-                return new Unbound(symbol);
+                return () -> new Unbound(symbol);
             } else {
                 return val;
             }

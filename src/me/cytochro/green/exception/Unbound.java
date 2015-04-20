@@ -12,7 +12,7 @@ import me.cytochro.green.Future;
 /**
  * Represents an unbound variable.
  */
-public class Unbound implements Exception, Future {
+public class Unbound implements Exception {
     public Unbound(Symbol name) {
         this.symbol = name;
     }
@@ -23,11 +23,6 @@ public class Unbound implements Exception, Future {
         return symbol;
     }
 
-    @Override
-    public T get() {
-        return this;
-    }
-    
     public String toString() {
         try {
             return toString(new StringBuffer()).toString();
