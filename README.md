@@ -288,8 +288,8 @@ Cons creates or retrieves a cons cell with the provided car and cdr
 members.  This can be used to construct proper lists and dotted
 lists.
 
-A proper list is a sequence of cons cells where every cons
-cell's cdr is also a proper list.
+A proper list is either an empty list or a sequence of cons cells
+where every cons cell's cdr is also a proper list.
 
 A dotted list is a sequence of cons cells where the cdr of the last cons
 is an object that is not nil (or a cons).
