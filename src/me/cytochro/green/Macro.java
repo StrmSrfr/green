@@ -18,13 +18,14 @@ public class Macro implements Evalable, Nameable {
     }
 
     public T expand(T expression, LexicalEnvironment lexenv) {
-        List expr = (List) (((List) expression).getCdr());
-        T[] exp = expr.toArray();
-        Future expanded =
+        final List expr = (List) (((List) expression).getCdr());
+        final T[] exp = expr.toArray();
+        final Future expanded =
             expander.apply(Arrays.stream(exp)
                            .map(Future::of)
                            .toArray(Future[]::new));
-        return expanded.get();
+        final T v = expanded.get();
+        return v;
     }
     
     public Symbol getName() {

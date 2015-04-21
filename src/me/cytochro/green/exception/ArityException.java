@@ -1,5 +1,8 @@
 package me.cytochro.green.exception;
 
+import java.io.IOError;
+import java.io.IOException;
+
 import me.cytochro.green.Exception;
 import me.cytochro.green.Function;
 
@@ -39,5 +42,27 @@ public class ArityException implements Exception {
         return maxExpected;
     }
 
-    // TODO more getters, toString
+    @Override
+    public String toString() {
+        try {
+            return toString(new StringBuffer()).toString();
+        } catch (IOException ioe) {
+            throw new IOError(ioe);
+        }
+    }
+
+    public Appendable toString(Appendable buf) throws IOException {
+        return buf
+            .append("#<")
+            .append(super.toString())
+            .append("<")
+            .append(String.valueOf(getFunction()))
+            .append(" expected ")
+            .append(String.valueOf(getMinExpected()))
+            .append(" to ")
+            .append(String.valueOf(getMaxExpected()))
+            .append(" arguments; was ")
+            .append(String.valueOf(getActualNumberOfArguments()))
+            .append(">>");
+    }
 }

@@ -36,16 +36,22 @@ public class MacroletTest {
         assertEvalsEqual("atom", "(macrolet ((x () (quote atom))) (x))");
     }
 
-    /*
     @Test
     public void testLet() throws IOException {
-        assertEvalsEqual("atom", "(macrolet ((let (bindings expression)"
-                         +                    "(cons (cons lambda (cons (mapcar car bindings)"
-                         +                                             "(cons expression ())))"
-                         +                                             "(mapcar car"
-                         +                                              "(mapcar cdr bindings)))))"
-                         +        "(let ((x atom)) x))");
+        assertEvalsEqual("atom",
+                         "((lambda (list mapcar)"
+                         + " (macrolet ((let (bindings expression)"
+                         + "              (cons (list (quote lambda) (mapcar car bindings)"
+                         + "                      expression)"
+                         + "                (mapcar car"
+                         + "                        (mapcar cdr bindings)))))"
+                         + "   (let ((x atom)) x)))"
+                         + "(lambda list list)"
+                         + "((lambda (mapcar)"
+                         + "   (lambda (f list)"
+                         + "     (mapcar f list mapcar)))"
+                         + " (lambda (f list mapcar)"
+                         + "   (if list"
+                         + "     (cons (f (car list)) (mapcar f (cdr list) mapcar))))))");
     }
-    TODO
-    */
 }
