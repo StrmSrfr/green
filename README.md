@@ -21,7 +21,7 @@ Green requires Java 8.
 
 Building Green requires ant.
 
-# The type hierarchy
+# The Type Hierarchy
 
 Green programs operate on values which have types.
 
@@ -120,15 +120,20 @@ might otherwise have.  Thus, exceptions propogate rather like NaN.
 Each special operator has its own rules as to the value of its
 expression in the face of an exceptional subexpression.
 
+### Exception Subtypes
+
+There are several specific types of exceptions extant, which should
+be refined and documented later.
+
 # Built in values
 
-## nil
+## Nil
 
 Nil is the empty list, and the false value.  It is written `()`.
 Unlike some other lisps, the symbol `nil` is not bound to anything by
 default.
 
-## t
+## T
 
 T is bound to evaluate to the symbol with the name "t".  It is true.
 It is worth remembering that anything that is not nil is true, so
@@ -217,16 +222,16 @@ arguments.  The expansion function evaluates to the symbol x.  Thus,
 the form `(macrox)` is replaced with `x` prior to evaluation, which
 causes an error as x has not been bound.
 
-### repl
+### Repl
 
 The repl special form is a total hack.  It gives you a new repl in
 which the lexical environment is the lexical environment in which it
 appears.  When end of file is reached, the repl form returns the last
 value that it printed.
 
-## Built-in functions
+## Fundamental Built-In Functions
 
-### atom
+### Atom
 
     (atom arg)
 
@@ -234,14 +239,14 @@ Atom returns `t` if its argument is not a cons.  Notably, although
 most lists are not atoms, the empty list (nil) is an atom, which is
 also why `atom` does not simply return its argument.
 
-### car
+### Car
 
     (car list)
 
 Car returns the first element of a list.  When used on an empty list,
 car returns an empty list.
 
-### cdr
+### Cdr
 
     (cdr list)
 
@@ -250,7 +255,7 @@ a proper list, `cdr` returns the rest of that list without the first
 element.  If `list` is a cons cell whose cdr member is not a list, cdr
 returns that member.
 
-### eq
+### Eq
 
     (eq x y)
     (eq)
@@ -273,14 +278,14 @@ It is also worth noting that `(eq)`, `(eq ())`, and `(eq () ())` are
 true, which is why `eq` returns `t` instead of one of its arguments
 when they satisfy the condition.
 
-### eval
+### Eval
 
     (eval form)
 
 Eval returns the result of evaluating the form passed to it in the
 default lexical environment.
 
-### cons
+### Cons
 
     (cons car cdr)
     
@@ -297,6 +302,33 @@ is an object that is not nil (or a cons).
 A circular list is a sequence of cons cells where a cell appears in
 its own cdr or a cdr of another cell in the sequence.  It is not
 currently possible to create circular lists in Green.
+
+### Load
+
+    (load symbol)
+
+Load takes the name of the symbol, appends ".green" to it, and
+evaluates a file with that name from the classpath.  It returns the
+value of the last expression in the file.
+
+Note that if you want to use a literal symbol you will have to quote
+it:
+
+    (load (quote myfile))
+
+If the file does not exist or there is an error reading it, it will
+return an exception.
+
+## Prelude Functions
+
+These functions are included in `prelude.green` for you your
+convenience, but you could write them yourself.
+
+To use them:
+
+    (load (quote prelude))
+
+Which will start a new repl with these functions defined.
 
 # Running
 

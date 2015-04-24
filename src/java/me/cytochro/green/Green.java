@@ -22,6 +22,7 @@ import me.cytochro.green.exception.Unbound;
 import me.cytochro.green.special.operator.Repl;
 
 public class Green {
+    public static final String SRC_EXTENSION = ".green";
     protected static final Symbol T = Symbol.intern("t");
     protected final LexicalEnvironment defaultLexicalEnvironment =
         new DefaultLexicalEnvironment(this);
@@ -54,6 +55,10 @@ public class Green {
 
     public T eval(T expression, LexicalEnvironment lexenv) {
         return evalForFuture(expression, lexenv).get();
+    }
+
+    public Future evalForFuture(T expression) {
+        return evalForFuture(expression, defaultLexicalEnvironment);
     }
 
     public Future evalForFuture(T expression, LexicalEnvironment lexenv) {

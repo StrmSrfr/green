@@ -1,6 +1,7 @@
 <project name="green" default="jar">
   <property name="dist" value="dist"/>
-  <property name="src" value="src"/>
+  <property name="src" value="src/java"/>
+  <property name="src.green" value="src/green"/>
   <property name="classes" value="classes"/>
   <property name="lib" value="lib"/>
   <property name="test.src" value="test/src"/>
@@ -71,6 +72,11 @@
            target="1.8">
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
+    <copy todir="${classes}">
+      <fileset dir="${src.green}">
+        <include name="**/*.green"/>
+      </fileset>
+    </copy>
   </target>
   <target name="classesDir">
     <mkdir dir="${classes}"/>
