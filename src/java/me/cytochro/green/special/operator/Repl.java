@@ -38,7 +38,7 @@ public class Repl implements T, SpecialOperator {
                 T star = new EOF();
                 T input;
                 while (!((input = ZSON.read(in)) instanceof EOF)) {
-                    star = runtime.eval(input);
+                    star = runtime.eval(input, lexenv);
                     ZSON.write(star, out);
                     out.write("\n> ");
                     out.flush();
