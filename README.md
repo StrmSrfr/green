@@ -344,6 +344,11 @@ Which will start a new repl with these functions defined.
 
 List returns a list of its arguments.
 
+### Mapcar
+
+Mapcar takes a function and a list.  It returns a list of the results
+of calling the function on each item in the list.
+
 ### Y
 
 Y takes a function.  It returns a function that calls the function

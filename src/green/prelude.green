@@ -1,5 +1,10 @@
 ((lambda (list y)
-  (repl))
+  ((lambda (mapcar)
+     (repl))
+   (y (lambda (mapcar f list)
+        (if list
+            (cons (f (car list)) (mapcar mapcar f (cdr list)))))))
+     )
  (lambda list list)
  (lambda (f)
    (lambda args

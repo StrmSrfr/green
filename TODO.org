@@ -2,10 +2,8 @@ TODO
 
 * 0.0.2
 ** prelude
-*** y
 *** let
 *** labels
-*** mapcar
 ** async
 ** every expression in an implicit progn runs in its own thread!
 ** the thread pool stuff
