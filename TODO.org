@@ -2,24 +2,32 @@ TODO
 
 * 0.0.2
 ** prelude
+*** y
 *** let
+*** labels
+*** mapcar
 ** async
-* 1
+** every expression in an implicit progn runs in its own thread!
+** the thread pool stuff
+** zerop
+** nand
+** refactor GreenTest to use some sort of assertEvalsEq type things
+* 0.0.3
 ** loop
 ** read/write
+* 1
 ** m-expressions
 * Untargeted
 ** explode/implode
 ** packages
+** gensyms
 ** package mapping in the lexical environment
 ** refactor Cons declarations to be List where appropriate
 ** some reflection stuff to make builtin function implementation easier?
    e.g. find apply method based on number of actual arguments
-** every expression in an implicit progn runs in its own thread!
 ** multiple values
 ** side effects
 ** JSR305
-** refactor GreenTest to use some sort of assertEvalsEq type things
 ** a type for types
 ** Jar with no external dependencies
 ** Code coverage

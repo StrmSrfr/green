@@ -1,3 +1,6 @@
-((lambda (list)
+((lambda (list y)
   (repl))
- (lambda list list))
+ (lambda list list)
+ (lambda (f)
+   (lambda args
+     (apply f (cons f args)))))

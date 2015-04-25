@@ -344,6 +344,12 @@ Which will start a new repl with these functions defined.
 
 List returns a list of its arguments.
 
+### Y
+
+Y takes a function.  It returns a function that calls the function
+you give it with itself as the first argument and the arguments you
+give it as the remaining arguments.
+
 # Running
 
 You should be able to run green simply by building it with ant:
