@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 
 import me.cytochro.zson.Symbol;
 
+import me.cytochro.green.builtin.Apply;
 import me.cytochro.green.builtin.Atom;
 import me.cytochro.green.builtin.Eq;
 import me.cytochro.green.builtin.Eval;
@@ -27,6 +28,7 @@ public class DefaultLexicalEnvironment extends LexicalEnvironment {
               entry(new Repl    (runtime)),
               entry(new Quote   ()),
               entry(new Atom    ()),
+              entry(new Apply   ()),
               entry(new Car     ()),
               entry(new Cdr     ()),
               entry(new Eq      ()),

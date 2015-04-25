@@ -231,6 +231,16 @@ value that it printed.
 
 ## Fundamental Built-In Functions
 
+### Apply
+
+    (apply function arguments)
+
+Apply calls the supplied function with the supplied arguments (a
+list) and returns the result.
+
+Apply could be written as a macro, but it is provided as a function
+so that it can be passed to other higher-order functions.
+
 ### Atom
 
     (atom arg)

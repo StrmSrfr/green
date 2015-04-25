@@ -3,7 +3,6 @@ TODO
 * 0.0.2
 ** prelude
 *** let
-** apply
 ** async
 * 1
 ** loop
@@ -14,6 +13,8 @@ TODO
 ** packages
 ** package mapping in the lexical environment
 ** refactor Cons declarations to be List where appropriate
+** some reflection stuff to make builtin function implementation easier?
+   e.g. find apply method based on number of actual arguments
 ** every expression in an implicit progn runs in its own thread!
 ** multiple values
 ** side effects
