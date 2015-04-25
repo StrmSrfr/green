@@ -20,7 +20,7 @@ public class Apply implements BuiltInFunction {
             return Future.of(new ArityException(this, cnt,
                                                 2, 2));
         }
-            
+
         final T arg1 = ourArguments[0].get();
         final T arg2 = ourArguments[1].get();
         final TypeException te = checkTypes(arg1, arg2);

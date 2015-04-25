@@ -13,7 +13,7 @@ public abstract class AbstractFunction implements BuiltInFunction {
         this.minArgs = minArgs;
         this.maxArgs = maxArgs;
     }
-    
+
     @Override
     public Future apply(Future[] arguments) {
         return () -> {
@@ -22,7 +22,7 @@ public abstract class AbstractFunction implements BuiltInFunction {
                 return new ArityException(this, arguments.length,
                                           minArgs, maxArgs);
             }
-            
+
             T[] args =
                 Arrays.stream(arguments)
                 .map(Future::get)
