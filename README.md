@@ -330,6 +330,10 @@ To use them:
 
 Which will start a new repl with these functions defined.
 
+### List
+
+List returns a list of its arguments.
+
 # Running
 
 You should be able to run green simply by building it with ant:
