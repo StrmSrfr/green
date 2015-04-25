@@ -1,1 +1,3 @@
-(repl)
+((lambda (list)
+  (repl))
+ (lambda list list))
