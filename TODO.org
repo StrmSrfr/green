@@ -1,9 +1,13 @@
 TODO
 
 * 0.0.2
-** file loading
 ** prelude
+*** let
+** apply
+** async
 * 1
+** loop
+** read/write
 ** m-expressions
 * Untargeted
 ** explode/implode
