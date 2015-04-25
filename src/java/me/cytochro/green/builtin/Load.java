@@ -13,12 +13,12 @@ import me.cytochro.zson.ZSON;
 
 import me.cytochro.green.Future;
 import me.cytochro.green.Green;
-import me.cytochro.green.BuiltInFunction;
+import me.cytochro.green.AbstractFunction;
 
 import me.cytochro.green.exception.FileNotFoundException;
 import me.cytochro.green.exception.TypeException;
 
-public class Load extends BuiltInFunction {
+public class Load extends AbstractFunction {
     @Override
     public T apply(T[] arguments) {
         final T arg = arguments[0];

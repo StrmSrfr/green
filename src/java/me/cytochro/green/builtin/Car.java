@@ -6,12 +6,12 @@ import me.cytochro.zson.Nil;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.T;
 
+import me.cytochro.green.AbstractFunction;
 import me.cytochro.green.Green;
-import me.cytochro.green.BuiltInFunction;
 import me.cytochro.green.Future;
 import me.cytochro.green.exception.TypeException;
 
-public class Car extends BuiltInFunction {
+public class Car extends AbstractFunction {
     @Override
     public T apply(T[] arguments) {
         T o = arguments[0];

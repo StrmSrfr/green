@@ -5,10 +5,10 @@ import me.cytochro.zson.Nil;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.T;
 
+import me.cytochro.green.AbstractFunction;
 import me.cytochro.green.Green;
-import me.cytochro.green.BuiltInFunction;
 
-public class Eq extends BuiltInFunction {
+public class Eq extends AbstractFunction {
     @Override
     public T apply(T[] arguments) {
         if (0 == arguments.length) {

@@ -5,10 +5,10 @@ import me.cytochro.zson.Nil;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.T;
 
+import me.cytochro.green.AbstractFunction;
 import me.cytochro.green.Green;
-import me.cytochro.green.BuiltInFunction;
 
-public class Cons extends BuiltInFunction {
+public class Cons extends AbstractFunction {
     @Override
     public synchronized me.cytochro.zson.Cons apply(T[] arguments) {
         final T car = arguments[0];
