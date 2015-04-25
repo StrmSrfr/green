@@ -1,6 +1,12 @@
 ((lambda (list y)
   ((lambda (mapcar)
-     (repl))
+     (macrolet ((let body
+                  (cons
+                   (cons (quote lambda)
+                         (cons (mapcar car (car body))
+                               (cdr body)))
+                   (mapcar car (mapcar cdr (car body))))))
+       (repl)))
    (y (lambda (mapcar f list)
         (if list
             (cons (f (car list)) (mapcar mapcar f (cdr list)))))))

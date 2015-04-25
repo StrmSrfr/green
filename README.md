@@ -329,10 +329,10 @@ it:
 If the file does not exist or there is an error reading it, it will
 return an exception.
 
-## Prelude Functions
+## Prelude
 
-These functions are included in `prelude.green` for you your
-convenience, but you could write them yourself.
+These functions and macros are included in `prelude.green` for you
+your convenience, but you could write them yourself.
 
 To use them:
 
@@ -340,16 +340,35 @@ To use them:
 
 Which will start a new repl with these functions defined.
 
-### List
+### Prelude Macros
+
+### Let
+
+Let establishes local bindings.  The general template is:
+
+    (let ((x a)
+          (y b)
+          (z c)
+          ...)
+      expression
+      ...)
+
+The expression is evaluated in an environment where `x` is bound
+to `a`, `y` is bound to `b`, and so forth.  Here `a`-`c` are evaluated
+while `x`-`z` are not.
+
+### Prelude Functions
+
+#### List
 
 List returns a list of its arguments.
 
-### Mapcar
+#### Mapcar
 
 Mapcar takes a function and a list.  It returns a list of the results
 of calling the function on each item in the list.
 
-### Y
+#### Y
 
 Y takes a function.  It returns a function that calls the function
 you give it with itself as the first argument and the arguments you

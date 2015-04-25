@@ -1,6 +1,7 @@
 TODO
 
 * 0.0.2
+** lambda bodies are implicit async
 ** prelude
 *** let
 *** labels
