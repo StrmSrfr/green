@@ -21,12 +21,29 @@ public class Async implements T, SpecialOperator {
         final Cons expr = (Cons) expression;
         assert (NAME.equals(expr.getCar()));
         final T[] body = ((List) expr.getCdr()).toArray();
-        final int formCount = body.length;
-        if (formCount == 0) {
-            return Future.of(Nil.NIL); // TODO: should maybe be (values)?
+        return new Body(body, lexenv, runtime);
+    }
+
+    public static class Body implements Future {
+        final T[] body;
+        final LexicalEnvironment lexenv;
+        final Green runtime;
+
+        public Body(T[] forms,
+                    LexicalEnvironment lexenv,
+                    Green runtime) {
+            this.body = forms;
+            this.lexenv = lexenv;
+            this.runtime = runtime;
         }
 
-        return () -> {
+        @Override
+        public T get() {
+            final int formCount = body.length;
+            if (formCount == 0) {
+                return Nil.NIL; // TODO: should maybe be (values)?
+            }
+
             final T ex =
                 Arrays.stream(body, 0, formCount - 1)
                 .parallel()
@@ -38,7 +55,7 @@ public class Async implements T, SpecialOperator {
             final T lastExpr = body[formCount - 1];
             final T lastResult = runtime.eval(lastExpr, lexenv);
             return Green.propogateException(ex, lastResult);
-        };
+        }
     }
 
     public Symbol name() {
