@@ -18,6 +18,8 @@ import me.cytochro.green.Green;
 import me.cytochro.green.LexicalEnvironment;
 import me.cytochro.green.SpecialOperator;
 
+import me.cytochro.green.special.operator.Async;
+
 import me.cytochro.green.exception.ArityException;
 import me.cytochro.green.exception.Unbound;
 
@@ -64,8 +66,7 @@ public class Lambda implements T, SpecialOperator {
             final LexicalEnvironment inner =
                 buildInnerLexenv(arguments);
 
-            T expression = body.getCar();
-            return runtime.evalForFuture(expression, inner);
+            return new Async.Body(body.toArray(), inner, runtime);
         }
 
         protected abstract ArityException checkArity(Future[] arguments);

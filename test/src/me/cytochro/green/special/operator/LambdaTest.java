@@ -82,6 +82,11 @@ public class LambdaTest {
     }
 
     @Test
+    public void testTwoForms() throws IOException {
+        assertEvalsEqual("atom", "((lambda () eq atom))");
+    }
+
+    @Test
     public void testSimpleNesting() throws IOException {
         assertEvalsEqual("t", "((lambda (x) ((lambda (y) y) t)) atom)");
     }
