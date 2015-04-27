@@ -14,7 +14,9 @@ TODO
 * 0.0.3
 ** loop
 ** read/write
-* 1
+* 0.5
+** compilation!?!
+* 1.0
 ** m-expressions
 * Untargeted
 ** explode/implode

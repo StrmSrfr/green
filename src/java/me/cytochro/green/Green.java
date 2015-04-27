@@ -41,6 +41,14 @@ public class Green {
         me.eval("(repl)");
     }
 
+    public static T propogateException(T a, T b) {
+        if (a instanceof Exception) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
     public T eval(String expressionAsString) throws IOException {
         return eval(ZSON.read(expressionAsString));
     }

@@ -191,6 +191,13 @@ For example, this will return the symbol `y`:
 You can also place a symbol in the list position, in which case that
 symbol will be bound to a list of all the arguments.
 
+### Async
+
+Async executes each expression in its body and returns the value
+of the last one, or the value of one that was exceptional.  Notably
+it does not impose any constraints on the ordering of the evaluation
+of the expressions, but they must all evaluate before it completes.
+
 ### Macrolet
 
 Macrolet is used to create macros.  Within the body of a macrolet

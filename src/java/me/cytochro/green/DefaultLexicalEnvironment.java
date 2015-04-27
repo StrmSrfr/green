@@ -13,6 +13,7 @@ import me.cytochro.green.builtin.Cdr;
 import me.cytochro.green.builtin.Cons;
 import me.cytochro.green.builtin.Load;
 
+import me.cytochro.green.special.operator.Async;
 import me.cytochro.green.special.operator.If;
 import me.cytochro.green.special.operator.Lambda;
 import me.cytochro.green.special.operator.Macrolet;
@@ -22,6 +23,7 @@ import me.cytochro.green.special.operator.Quote;
 public class DefaultLexicalEnvironment extends LexicalEnvironment {
     public DefaultLexicalEnvironment(Green runtime) {
         super(entry(runtime.getT(), () -> runtime.getT()),
+              entry(new Async   (runtime)),
               entry(new If      (runtime)),
               entry(new Lambda  (runtime)),
               entry(new Macrolet(runtime)),
