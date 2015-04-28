@@ -44,12 +44,12 @@ public class Apply implements BuiltInFunction {
 
     protected TypeException checkTypes(T arg1, T arg2) {
         if (!(arg1 instanceof Function)) {
-            return new TypeException(Symbol.intern("function"),
-                                     Symbol.intern(arg1.getClass().getName()));
+            return new TypeException("function",
+                                     arg1);
         }
         if (!(arg2 instanceof List)) {
-            return new TypeException(Symbol.intern("list"),
-                                     Symbol.intern(arg2.getClass().getName()));
+            return new TypeException("list",
+                                     arg2);
         }
         return null;
     }

@@ -23,8 +23,7 @@ public class Load extends AbstractFunction {
     public T apply(T[] arguments) {
         final T arg = arguments[0];
         if (!(arg instanceof Symbol)) {
-            return new TypeException(Symbol.intern("symbol"),
-                                     Symbol.intern(arg.getClass().getName()));
+            return new TypeException("symbol", arg);
         }
 
         final Symbol sym = (Symbol) arg;

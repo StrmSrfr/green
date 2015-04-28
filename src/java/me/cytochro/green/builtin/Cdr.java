@@ -16,7 +16,7 @@ public class Cdr extends AbstractFunction {
     public T apply(T[] arguments) {
         T o = arguments[0];
         if (!(o instanceof List)) {
-            return new TypeException(Symbol.intern("list"), o); // TODO should be type?
+            return new TypeException("list", o);
         } else {
             return ((List) o).getCdr();
         }
