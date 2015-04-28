@@ -13,7 +13,6 @@ import me.cytochro.zson.ZSON;
 
 import me.cytochro.green.Future;
 import me.cytochro.green.Green;
-import me.cytochro.green.AbstractFunction;
 
 import me.cytochro.green.exception.FileNotFoundException;
 import me.cytochro.green.exception.TypeException;

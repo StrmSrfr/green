@@ -5,7 +5,6 @@ import me.cytochro.zson.Nil;
 import me.cytochro.zson.Symbol;
 import me.cytochro.zson.T;
 
-import me.cytochro.green.AbstractFunction;
 import me.cytochro.green.Green;
 
 public class Eval extends AbstractFunction {
