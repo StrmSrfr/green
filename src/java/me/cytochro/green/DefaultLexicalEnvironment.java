@@ -12,6 +12,7 @@ import me.cytochro.green.builtin.Car;
 import me.cytochro.green.builtin.Cdr;
 import me.cytochro.green.builtin.Cons;
 import me.cytochro.green.builtin.Load;
+import me.cytochro.green.builtin.Zerop;
 
 import me.cytochro.green.special.operator.Async;
 import me.cytochro.green.special.operator.If;
@@ -36,6 +37,7 @@ public class DefaultLexicalEnvironment extends LexicalEnvironment {
               entry(new Eq      ()),
               entry(new Eval    (runtime)), 
               entry(new Cons    ()),
+              entry(new Zerop   ()),
               /* nonfundamental */
               entry(new Load    (runtime))
               );

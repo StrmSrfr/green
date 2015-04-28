@@ -5,7 +5,6 @@ TODO
 *** labels
 ** every expression in an implicit progn runs in its own thread!
 ** the thread pool stuff
-** zerop
 ** nand
 ** refactor GreenTest to use some sort of assertEvalsEq type things
 * 0.0.3
